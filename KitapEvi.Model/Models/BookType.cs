@@ -10,5 +10,6 @@ namespace KitapEvi.Model.Models
     {
         public int Id { get; set; }
         public string TypeName { get; set; }
+        public int Views { get; set; }
     }
 }
