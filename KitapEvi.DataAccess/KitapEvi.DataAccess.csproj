@@ -13,4 +13,8 @@
     <ProjectReference Include="..\KitapEvi.Model\KitapEvi.Model.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\" />
+  </ItemGroup>
+
 </Project>

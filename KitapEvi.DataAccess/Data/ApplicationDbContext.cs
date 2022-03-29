@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using KitapEvi.Model.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +14,6 @@ namespace KitapEvi.DataAccess.Data
         {
 
         }
+        public DbSet<Category> Categories { get; set; }
     }
 }
