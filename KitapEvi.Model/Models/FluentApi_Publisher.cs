@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace KitapEvi.Model.Models
 {
@@ -12,5 +7,6 @@ namespace KitapEvi.Model.Models
         public int PublisherId { get; set; }
         public string PublisherName { get; set; }
         public string Location { get; set; }
+        public List<FluentApi_Book> FluentApi_Book { get; set; }
     }
 }

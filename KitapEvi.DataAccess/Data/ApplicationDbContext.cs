@@ -1,10 +1,6 @@
-﻿using KitapEvi.Model.Models;
+﻿using KitapEvi.DataAccess.FluentValidation;
+using KitapEvi.Model.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KitapEvi.DataAccess.Data
 {
@@ -27,27 +23,12 @@ namespace KitapEvi.DataAccess.Data
         public DbSet<FluentApi_Publisher> FluentApi_Publishers { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //Composite Key Oluşturma
-            modelBuilder.Entity<BookWriter>().HasKey(x => new { x.WriterId, x.BookId });
 
-
-            modelBuilder.Entity<FluentApi_BookDetail>().HasKey(x => x.BookDetailId);
-            modelBuilder.Entity<FluentApi_BookDetail>().Property(x => x.NumberOfEpisodes).IsRequired();
-
-            modelBuilder.Entity<FluentApi_Book>().HasKey(x => x.BookId);
-            modelBuilder.Entity<FluentApi_Book>().Property(x => x.BookName).IsRequired();
-            modelBuilder.Entity<FluentApi_Book>().Property(x => x.Price).IsRequired();
-            modelBuilder.Entity<FluentApi_Book>().Property(x => x.ISBN).IsRequired().HasMaxLength(13);
-
-            modelBuilder.Entity<FluentApi_Writer>().HasKey(x => x.WriterId);
-            modelBuilder.Entity<FluentApi_Writer>().Property(x => x.WriterName).IsRequired();
-            modelBuilder.Entity<FluentApi_Writer>().Property(x => x.WriterSurname).IsRequired();
-            modelBuilder.Entity<FluentApi_Writer>().Ignore(x => x.NameSurname);
-
-            modelBuilder.Entity<FluentApi_Publisher>().HasKey(x => x.PublisherId);
-            modelBuilder.Entity<FluentApi_Publisher>().Property(x => x.PublisherName).IsRequired();
-            modelBuilder.Entity<FluentApi_Publisher>().Property(x => x.Location).IsRequired();
-
+            modelBuilder.ApplyConfiguration(new BookConfiugration());
+            modelBuilder.ApplyConfiguration(new BookDetailConfiguration());
+            modelBuilder.ApplyConfiguration(new BookWriterConfiguration());
+            modelBuilder.ApplyConfiguration(new PublisherConfiguration());
+            modelBuilder.ApplyConfiguration(new WriterConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }

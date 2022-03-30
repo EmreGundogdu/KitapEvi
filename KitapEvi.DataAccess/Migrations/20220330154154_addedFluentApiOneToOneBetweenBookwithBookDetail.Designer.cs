@@ -4,14 +4,16 @@ using KitapEvi.DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace KitapEvi.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220330154154_addedFluentApiOneToOneBetweenBookwithBookDetail")]
+    partial class addedFluentApiOneToOneBetweenBookwithBookDetail
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -150,15 +152,10 @@ namespace KitapEvi.DataAccess.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
-                    b.Property<int>("PublisherId")
-                        .HasColumnType("int");
-
                     b.HasKey("BookId");
 
                     b.HasIndex("BookDetailId")
                         .IsUnique();
-
-                    b.HasIndex("PublisherId");
 
                     b.ToTable("FluentApi_Books");
                 });
@@ -182,21 +179,6 @@ namespace KitapEvi.DataAccess.Migrations
                     b.HasKey("BookDetailId");
 
                     b.ToTable("FluentApi_BookDetails");
-                });
-
-            modelBuilder.Entity("KitapEvi.Model.Models.FluentApi_BookWriter", b =>
-                {
-                    b.Property<int>("WriterId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("BookId")
-                        .HasColumnType("int");
-
-                    b.HasKey("WriterId", "BookId");
-
-                    b.HasIndex("BookId");
-
-                    b.ToTable("FluentApi_BookWriter");
                 });
 
             modelBuilder.Entity("KitapEvi.Model.Models.FluentApi_Publisher", b =>
@@ -346,34 +328,7 @@ namespace KitapEvi.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("KitapEvi.Model.Models.FluentApi_Publisher", "FluentApi_Publisher")
-                        .WithMany("FluentApi_Book")
-                        .HasForeignKey("PublisherId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("FluentApi_BookDetail");
-
-                    b.Navigation("FluentApi_Publisher");
-                });
-
-            modelBuilder.Entity("KitapEvi.Model.Models.FluentApi_BookWriter", b =>
-                {
-                    b.HasOne("KitapEvi.Model.Models.FluentApi_Book", "FluentApi_Book")
-                        .WithMany("FluentApi_BookWriters")
-                        .HasForeignKey("BookId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("KitapEvi.Model.Models.FluentApi_Writer", "FluentApi_Writer")
-                        .WithMany("FluentApi_BookWriters")
-                        .HasForeignKey("WriterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("FluentApi_Book");
-
-                    b.Navigation("FluentApi_Writer");
                 });
 
             modelBuilder.Entity("KitapEvi.Model.Models.Book", b =>
@@ -391,24 +346,9 @@ namespace KitapEvi.DataAccess.Migrations
                     b.Navigation("Books");
                 });
 
-            modelBuilder.Entity("KitapEvi.Model.Models.FluentApi_Book", b =>
-                {
-                    b.Navigation("FluentApi_BookWriters");
-                });
-
             modelBuilder.Entity("KitapEvi.Model.Models.FluentApi_BookDetail", b =>
                 {
                     b.Navigation("FluentApi_Book");
-                });
-
-            modelBuilder.Entity("KitapEvi.Model.Models.FluentApi_Publisher", b =>
-                {
-                    b.Navigation("FluentApi_Book");
-                });
-
-            modelBuilder.Entity("KitapEvi.Model.Models.FluentApi_Writer", b =>
-                {
-                    b.Navigation("FluentApi_BookWriters");
                 });
 
             modelBuilder.Entity("KitapEvi.Model.Models.Publisher", b =>

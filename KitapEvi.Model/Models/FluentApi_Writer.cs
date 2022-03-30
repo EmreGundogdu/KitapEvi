@@ -1,10 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KitapEvi.Model.Models
 {
@@ -16,5 +11,6 @@ namespace KitapEvi.Model.Models
         public string Location { get; set; }
         public DateTime Birthday { get; set; }
         public string NameSurname { get => $"{WriterName} + {WriterName}"; }
+        public ICollection<FluentApi_BookWriter> FluentApi_BookWriters { get; set; }
     }
 }

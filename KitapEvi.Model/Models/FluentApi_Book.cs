@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace KitapEvi.Model.Models
 {
@@ -14,5 +8,10 @@ namespace KitapEvi.Model.Models
         public string BookName { get; set; }
         public double Price { get; set; }
         public string ISBN { get; set; }
+        public int BookDetailId { get; set; }
+        public FluentApi_BookDetail FluentApi_BookDetail { get; set; }
+        public int PublisherId { get; set; }
+        public FluentApi_Publisher FluentApi_Publisher { get; set; }
+        public ICollection<FluentApi_BookWriter> FluentApi_BookWriters { get; set; }
     }
 }

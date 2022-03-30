@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace KitapEvi.Model.Models
+﻿namespace KitapEvi.Model.Models
 {
     public class FluentApi_BookDetail
     {
@@ -13,5 +6,6 @@ namespace KitapEvi.Model.Models
         public int NumberOfEpisodes { get; set; }
         public int BookPage { get; set; }
         public double Weight { get; set; }
+        public FluentApi_Book FluentApi_Book { get; set; }
     }
 }
