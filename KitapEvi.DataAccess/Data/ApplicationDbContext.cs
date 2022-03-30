@@ -20,9 +20,15 @@ namespace KitapEvi.DataAccess.Data
         public DbSet<Writer> Writers { get; set; }
         public DbSet<Publisher> Publishers { get; set; }
         public DbSet<BookWriter> BookWriters { get; set; }
+        public DbSet<FluentApi_BookDetail> FluentApi_BookDetails { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //Composite Key Oluşturma
             modelBuilder.Entity<BookWriter>().HasKey(x => new { x.WriterId, x.BookId });
+
+
+            modelBuilder.Entity<FluentApi_BookDetail>().HasKey(x => x.BookDetailId);
+            modelBuilder.Entity<FluentApi_BookDetail>().Property(x => x.NumberOfEpisodes).IsRequired();
             base.OnModelCreating(modelBuilder);
         }
 
