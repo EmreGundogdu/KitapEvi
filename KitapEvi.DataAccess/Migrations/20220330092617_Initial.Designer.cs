@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KitapEvi.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220330085403_addedRelationBetweenBookAndCategory")]
-    partial class addedRelationBetweenBookAndCategory
+    [Migration("20220330092617_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,10 +23,13 @@ namespace KitapEvi.DataAccess.Migrations
 
             modelBuilder.Entity("KitapEvi.Model.Models.Book", b =>
                 {
-                    b.Property<int>("Book_Id")
+                    b.Property<int>("BookId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("BookDetailId")
+                        .HasColumnType("int");
 
                     b.Property<string>("BookName")
                         .IsRequired()
@@ -43,16 +46,45 @@ namespace KitapEvi.DataAccess.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
-                    b.HasKey("Book_Id");
+                    b.Property<int>("PublisherId")
+                        .HasColumnType("int");
+
+                    b.HasKey("BookId");
+
+                    b.HasIndex("BookDetailId")
+                        .IsUnique();
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("PublisherId");
 
                     b.ToTable("Books");
                 });
 
+            modelBuilder.Entity("KitapEvi.Model.Models.BookDetail", b =>
+                {
+                    b.Property<int>("BookDetailId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("BookPage")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NumberOfEpisodes")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Weight")
+                        .HasColumnType("float");
+
+                    b.HasKey("BookDetailId");
+
+                    b.ToTable("BookDetail");
+                });
+
             modelBuilder.Entity("KitapEvi.Model.Models.BookType", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("BookTypeId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -63,14 +95,14 @@ namespace KitapEvi.DataAccess.Migrations
                     b.Property<int>("Views")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("BookTypeId");
 
                     b.ToTable("BookTypes");
                 });
 
             modelBuilder.Entity("KitapEvi.Model.Models.Category", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("CategoryId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -78,14 +110,14 @@ namespace KitapEvi.DataAccess.Migrations
                     b.Property<string>("CategoryName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("CategoryId");
 
                     b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("KitapEvi.Model.Models.Publisher", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("PublisherId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -98,14 +130,14 @@ namespace KitapEvi.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("PublisherId");
 
                     b.ToTable("Publishers");
                 });
 
             modelBuilder.Entity("KitapEvi.Model.Models.Writer", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("WriterId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -125,25 +157,51 @@ namespace KitapEvi.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("WriterId");
 
                     b.ToTable("Writers");
                 });
 
             modelBuilder.Entity("KitapEvi.Model.Models.Book", b =>
                 {
+                    b.HasOne("KitapEvi.Model.Models.BookDetail", "BookDetail")
+                        .WithOne("Book")
+                        .HasForeignKey("KitapEvi.Model.Models.Book", "BookDetailId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("KitapEvi.Model.Models.Category", "Category")
                         .WithMany("Books")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("KitapEvi.Model.Models.Publisher", "Publisher")
+                        .WithMany("Book")
+                        .HasForeignKey("PublisherId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("BookDetail");
+
                     b.Navigation("Category");
+
+                    b.Navigation("Publisher");
+                });
+
+            modelBuilder.Entity("KitapEvi.Model.Models.BookDetail", b =>
+                {
+                    b.Navigation("Book");
                 });
 
             modelBuilder.Entity("KitapEvi.Model.Models.Category", b =>
                 {
                     b.Navigation("Books");
+                });
+
+            modelBuilder.Entity("KitapEvi.Model.Models.Publisher", b =>
+                {
+                    b.Navigation("Book");
                 });
 #pragma warning restore 612, 618
         }

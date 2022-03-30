@@ -10,7 +10,7 @@ namespace KitapEvi.Model.Models
 {
     public class Writer
     {
-        public int Id { get; set; }
+        public int WriterId { get; set; }
         [Required]
         public string WriterName { get; set; }
         [Required]

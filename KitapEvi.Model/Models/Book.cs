@@ -10,8 +10,7 @@ namespace KitapEvi.Model.Models
 {
     public class Book
     {
-        [Key]
-        public int Book_Id { get; set; }
+        public int BookId { get; set; }
         [Required]
         public string BookName { get; set; }
         [Required]
@@ -21,5 +20,11 @@ namespace KitapEvi.Model.Models
         [ForeignKey("Category")]
         public int CategoryId { get; set; }
         public Category Category { get; set; }
+        [ForeignKey("BookDetail")]
+        public int BookDetailId { get; set; }
+        public BookDetail BookDetail { get; set; }
+        [ForeignKey("Publisher")]
+        public int PublisherId { get; set; }
+        public Publisher Publisher { get; set; }
     }
 }
