@@ -9,7 +9,6 @@ namespace KitapEvi.DataAccess.FluentValidation
         public void Configure(EntityTypeBuilder<FluentApi_BookWriter> builder)
         {
             builder.HasKey(x => new { x.WriterId, x.BookId });
-
             builder.HasOne(x => x.FluentApi_Book).WithMany(x => x.FluentApi_BookWriters).HasForeignKey(x => x.BookId);
             builder.HasOne(x => x.FluentApi_Writer).WithMany(x => x.FluentApi_BookWriters).HasForeignKey(x => x.WriterId);
         }

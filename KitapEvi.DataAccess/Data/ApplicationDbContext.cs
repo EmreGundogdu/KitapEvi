@@ -23,6 +23,7 @@ namespace KitapEvi.DataAccess.Data
         public DbSet<FluentApi_Publisher> FluentApi_Publishers { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<BookWriter>().HasKey(x => new { x.WriterId, x.BookId });
 
             modelBuilder.ApplyConfiguration(new BookConfiugration());
             modelBuilder.ApplyConfiguration(new BookDetailConfiguration());
