@@ -26,5 +26,6 @@ namespace KitapEvi.Model.Models
         [ForeignKey("Publisher")]
         public int PublisherId { get; set; }
         public Publisher Publisher { get; set; }
+        public ICollection<BookWriter> BookWriters { get; set; }
     }
 }

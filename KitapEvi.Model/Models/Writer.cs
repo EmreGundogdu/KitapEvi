@@ -19,6 +19,7 @@ namespace KitapEvi.Model.Models
         public string Location { get; set; }
         public DateTime Birthday { get; set; }
         [NotMapped]
-        public string NameSurname { get => $"{WriterName}+{WriterName}"; }
+        public string NameSurname { get => $"{WriterName} + {WriterName}"; }
+        public ICollection<BookWriter> BookWriters { get; set; }
     }
 }

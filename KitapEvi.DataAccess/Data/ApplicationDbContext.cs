@@ -19,5 +19,12 @@ namespace KitapEvi.DataAccess.Data
         public DbSet<Book> Books { get; set; }
         public DbSet<Writer> Writers { get; set; }
         public DbSet<Publisher> Publishers { get; set; }
+        public DbSet<BookWriter> BookWriters { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<BookWriter>().HasKey(x => new { x.WriterId, x.BookId });
+            base.OnModelCreating(modelBuilder);
+        }
+
     }
 }
