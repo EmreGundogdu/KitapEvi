@@ -15,5 +15,6 @@ namespace KitapEvi.Model.Models
         public string WriterSurname { get; set; }
         public string Location { get; set; }
         public DateTime Birthday { get; set; }
+        public string NameSurname { get => $"{WriterName} + {WriterName}"; }
     }
 }
