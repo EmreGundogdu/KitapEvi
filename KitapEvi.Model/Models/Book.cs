@@ -18,5 +18,8 @@ namespace KitapEvi.Model.Models
         public double Price { get; set; }
         [Required, MaxLength(13)]
         public string ISBN { get; set; }
+        [ForeignKey("Category")]
+        public int CategoryId { get; set; }
+        public Category Category { get; set; }
     }
 }
