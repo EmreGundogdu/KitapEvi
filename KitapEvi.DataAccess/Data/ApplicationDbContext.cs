@@ -17,5 +17,7 @@ namespace KitapEvi.DataAccess.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<BookType> BookTypes { get; set; }
         public DbSet<Book> Books { get; set; }
+        public DbSet<Writer> Writers { get; set; }
+        public DbSet<Publisher> Publishers { get; set; }
     }
 }

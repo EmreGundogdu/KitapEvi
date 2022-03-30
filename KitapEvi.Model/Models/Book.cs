@@ -18,7 +18,5 @@ namespace KitapEvi.Model.Models
         public double Price { get; set; }
         [Required, MaxLength(13)]
         public string ISBN { get; set; }
-        [NotMapped]
-        public int DiscountedPrice { get; set; }
     }
 }
