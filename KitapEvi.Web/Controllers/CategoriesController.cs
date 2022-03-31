@@ -34,5 +34,24 @@ namespace KitapEvi.Web.Controllers
             }
             return View(category);
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult UpdateInser(Category category)
+        {
+            if (ModelState.IsValid)
+            {
+                if (category.CategoryId == 0)
+                {
+                    _context.Categories.Add(category);
+                }
+                else
+                {
+                    _context.Categories.Update(category);
+                }
+                _context.SaveChanges();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(category);
+        }
     }
 }
