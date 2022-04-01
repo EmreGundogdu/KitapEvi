@@ -37,7 +37,7 @@ namespace KitapEvi.Web.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult UpdateInser(Category category)
+        public IActionResult UpdateInsert(Category category)
         {
             if (ModelState.IsValid)
             {
