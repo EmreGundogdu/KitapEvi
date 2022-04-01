@@ -21,16 +21,18 @@
             <table class="table-striped table border">
                 <tr class="table-secondary">
                     <th>Book Name</th>
-                    @*<th>Publisher Name</th>
-                        <th>Writer Of Book</th>
+                    <th>Price</th>
+                    <th>Publisher Name</th>
+                    @*    <th>Writer Of Book</th>
                         <th></th>*@
                 </tr>
                 @foreach (var item in Model)
                 {
                     <tr>
                         <td>@item.BookName</td>
-                        @*<td>@item.Publisher.PublisherName</td>
-                            <td>
+                        <td>@item.Price</td>
+                        <td>@item.Publisher.PublisherName</td>
+                        @*    <td>
                             @{
                             var writers = "";
                             }

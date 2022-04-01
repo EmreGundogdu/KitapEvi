@@ -19,8 +19,16 @@ namespace KitapEvi.Web.Controllers
 
         public IActionResult Index()
         {
-            List<Book> writers = _context.Books.ToList();
-            return View(writers);
+            List<Book> books = _context.Books.ToList();
+            foreach (var obj in books)
+            {
+                //Uygulunabilir ama server açısından verimli değildir
+                //obj.Publisher = _context.Publishers.FirstOrDefault(x => x.PublisherId == obj.PublisherId);
+
+                //Uygulanabilir ve server açısından verimlidir.
+                _context.Entry(obj).Reference(x => x.Publisher).Load();
+            }
+            return View(books);
         }
         public IActionResult UpdateInsert(int? id)
         {
@@ -44,27 +52,23 @@ namespace KitapEvi.Web.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult UpdateInsert(Writer writer)
+        public IActionResult UpdateInsert(BookViewModel bookVm)
         {
-            if (ModelState.IsValid)
+            if (bookVm.Book.BookId == 0)
             {
-                if (writer.WriterId == 0)
-                {
-                    _context.Writers.Add(writer);
-                }
-                else
-                {
-                    _context.Writers.Update(writer);
-                }
-                _context.SaveChanges();
-                return RedirectToAction(nameof(Index));
+                _context.Books.Add(bookVm.Book);
             }
-            return View(writer);
+            else
+            {
+                _context.Books.Update(bookVm.Book);
+            }
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Index));
         }
         public IActionResult Delete(int id)
         {
-            var writer = _context.Writers.FirstOrDefault(x => x.WriterId == id);
-            _context.Writers.Remove(writer);
+            var book = _context.Books.FirstOrDefault(x => x.BookId == id);
+            _context.Books.Remove(book);
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
