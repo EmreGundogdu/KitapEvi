@@ -40,7 +40,7 @@ namespace KitapEvi.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (writer.WriterId== 0)
+                if (writer.WriterId == 0)
                 {
                     _context.Writers.Add(writer);
                 }

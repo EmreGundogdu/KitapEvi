@@ -42,31 +42,31 @@ namespace KitapEvi.Web.Controllers
             }
             return View(book);
         }
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public IActionResult UpdateInsert(Writer writer)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        if (writer.WriterId == 0)
-        //        {
-        //            _context.Writers.Add(writer);
-        //        }
-        //        else
-        //        {
-        //            _context.Writers.Update(writer);
-        //        }
-        //        _context.SaveChanges();
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return View(writer);
-        //}
-        //public IActionResult Delete(int id)
-        //{
-        //    var writer = _context.Writers.FirstOrDefault(x => x.WriterId == id);
-        //    _context.Writers.Remove(writer);
-        //    _context.SaveChanges();
-        //    return RedirectToAction(nameof(Index));
-        //}
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult UpdateInsert(Writer writer)
+        {
+            if (ModelState.IsValid)
+            {
+                if (writer.WriterId == 0)
+                {
+                    _context.Writers.Add(writer);
+                }
+                else
+                {
+                    _context.Writers.Update(writer);
+                }
+                _context.SaveChanges();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(writer);
+        }
+        public IActionResult Delete(int id)
+        {
+            var writer = _context.Writers.FirstOrDefault(x => x.WriterId == id);
+            _context.Writers.Remove(writer);
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
