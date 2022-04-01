@@ -1,6 +1,8 @@
 ﻿using KitapEvi.DataAccess.Data;
 using KitapEvi.Model.Models;
+using KitapEvi.Model.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -20,20 +22,26 @@ namespace KitapEvi.Web.Controllers
             List<Book> writers = _context.Books.ToList();
             return View(writers);
         }
-        //public IActionResult UpdateInsert(int? id)
-        //{
-        //    Book book = new();
-        //    if (id == null)
-        //    {
-        //        return View(writer);
-        //    }
-        //    writer = _context.Writers.FirstOrDefault(x => x.WriterId == id);
-        //    if (writer == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return View(writer);
-        //}
+        public IActionResult UpdateInsert(int? id)
+        {
+            BookViewModel book = new();
+            book.ListOfPublishers = _context.Publishers.Select(x => new SelectListItem
+            {
+                Text = x.PublisherName,
+                Value = x.PublisherId.ToString()
+            });
+            if (id == null)
+            {
+                return View(book);
+            }
+
+            book.Book = _context.Books.FirstOrDefault(x => x.BookId == id);
+            if (book == null)
+            {
+                return NotFound();
+            }
+            return View(book);
+        }
         //[HttpPost]
         //[ValidateAntiForgeryToken]
         //public IActionResult UpdateInsert(Writer writer)
