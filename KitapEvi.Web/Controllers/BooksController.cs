@@ -109,5 +109,15 @@ namespace KitapEvi.Web.Controllers
             }
             return RedirectToAction(nameof(Index));
         }
+        public IActionResult ABD()
+        {
+            IEnumerable<Book> bookList = _context.Books;
+            var filtreleme1 = bookList.Where(a => a.Price > 25);
+
+            IQueryable<Book> bookList2 = _context.Books;
+            var filtreleme2 = bookList.Where(a => a.Price > 25);
+
+            return RedirectToAction(nameof(Index))
+        }
     }
 }
