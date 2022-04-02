@@ -1,0 +1,71 @@
+﻿@model BookViewModel
+
+<form method="post">
+    <div class="row p-3 border">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="Book.BookId" />
+        <input type="hidden" asp-for="Book.BookDetail.BookDetailId" />
+        <div class="col-12 border-bottom">
+            <h2 class="text-primary">Book Details</h2>
+        </div>
+    </div>
+    <div class="col-8 pt-4">
+        <div class="form-group row">
+            <div class="col-4">
+                <label asp-for="Book.BookName"></label>
+            </div>
+            <div class="col-8">
+                <input asp-for="Book.BookName" disabled class="form-control" />
+                <span asp-validation-for="Book.BookName" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-4">
+                <label asp-for="Book.BookDetail.NumberOfEpisodes"></label>
+            </div>
+            <div class="col-8">
+                <input asp-for="Book.BookDetail.NumberOfEpisodes" class="form-control" />
+                <span asp-validation-for="Book.BookDetail.NumberOfEpisodes" class="text-danger"></span>
+
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-4">
+                <label asp-for="Book.BookDetail.BookPage"></label>
+            </div>
+            <div class="col-8">
+                <input asp-for="Book.BookDetail.BookPage" class="form-control" />
+                <span asp-validation-for="Book.BookDetail.BookPage" class="text-danger"></span>
+
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-4">
+                <label asp-for="Book.BookDetail.Weight"></label>
+            </div>
+            <div class="col-8">
+                <input asp-for="Book.BookDetail.Weight" class="form-control" />
+                <span asp-validation-for="Book.BookDetail.Weight" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-4 offset-4">
+                @if (Model.Book == null || Model.Book.BookId != 0 || Model.Book.BookDetail.BookDetailId != 0)
+                {
+                    <button class="btn btn-primary form-control" type="submit">Update</button>
+                }
+                else
+                {
+                    <button class="btn btn-primary form-control" type="submit">Create</button>
+                }
+            </div>
+            <div class="col-4">
+                <a asp-action="Index" class="btn btn-success form-control">Back To List</a>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts{
+<partial name="_ValidationsScriptsPartial" />
+}

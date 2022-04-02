@@ -3,6 +3,7 @@ using KitapEvi.Model.Models;
 using KitapEvi.Model.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -81,8 +82,8 @@ namespace KitapEvi.Web.Controllers
                 return View(book);
             }
 
-            book.Book = _context.Books.FirstOrDefault(x => x.BookId == id);
-            book.Book.BookDetail = _context.BookDetails.FirstOrDefault(x => x.BookDetailId == book.Book.BookId);
+            book.Book = _context.Books.Include(x => x.BookDetail).FirstOrDefault(x => x.BookId == id);
+            //book.Book.BookDetail = _context.BookDetails.FirstOrDefault(x => x.BookDetailId == book.Book.BookId);
             if (book == null)
             {
                 return NotFound();
@@ -103,9 +104,9 @@ namespace KitapEvi.Web.Controllers
             }
             else
             {
-                _context.Books.Update(bookVm.Book);
+                _context.BookDetails.Update(bookVm.Book.BookDetail);
+                _context.SaveChanges();
             }
-            _context.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
     }
