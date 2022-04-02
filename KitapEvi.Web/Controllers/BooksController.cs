@@ -72,5 +72,41 @@ namespace KitapEvi.Web.Controllers
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
+        public IActionResult Details(int? id)
+        {
+            BookViewModel book = new();
+
+            if (id == null)
+            {
+                return View(book);
+            }
+
+            book.Book = _context.Books.FirstOrDefault(x => x.BookId == id);
+            book.Book.BookDetail = _context.BookDetails.FirstOrDefault(x => x.BookDetailId == book.Book.BookId);
+            if (book == null)
+            {
+                return NotFound();
+            }
+            return View(book);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Details(BookViewModel bookVm)
+        {
+            if (bookVm.Book.BookDetailId == 0)
+            {
+                _context.BookDetails.Add(bookVm.Book.BookDetail);
+                _context.SaveChanges();
+                var bookData = _context.Books.FirstOrDefault(x => x.BookDetailId == bookVm.Book.BookId);
+                bookData.BookDetailId = bookVm.Book.BookDetailId;
+                _context.SaveChanges();
+            }
+            else
+            {
+                _context.Books.Update(bookVm.Book);
+            }
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
